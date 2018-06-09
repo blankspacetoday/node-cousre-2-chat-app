@@ -12,8 +12,18 @@ var io = socketIO(server)
 
 app.use(express.static(publicPath))
 
-io.on('connections', (socket)=> {
+io.on('connection', (socket)=> {
     console.log('New user connected')
+
+    socket.emit('newMessage', {
+        from: 'Nine',
+        text: 'Hey, im an alien',
+        createAt: 123,
+    })
+
+    socket.on('createMessage', (message)=> {
+        console.log('createMessage', newEmail)
+    })
 
     socket.on('disconnect', ()=>  {
             console.log('User was disconnected')
